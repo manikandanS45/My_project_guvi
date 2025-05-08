@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-RUN apt update
+RUN apt upgrade 
 
 COPY . /usr/share/nginx/html
 
