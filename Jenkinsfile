@@ -7,6 +7,7 @@ pipeline {
         stage('Build...') {
             steps {
                 dir("${env.WORKSPACE}/build") {
+                    sh 'chmod +x build.sh'
                     sh './build.sh'
                 }
             }
@@ -15,6 +16,7 @@ pipeline {
             when { branch 'dev' }
             steps {
                 dir("${env.WORKSPACE}/build") {
+                    sh 'chmod +x deploy.sh'
                     sh './deploy.sh dev'
                 }
             }
@@ -23,6 +25,7 @@ pipeline {
             when { branch 'main' }
             steps {
                 dir("${env.WORKSPACE}/build") {
+                    sh 'chmod +x deploy.sh'
                     sh './deploy.sh prod'
                 }
             }
