@@ -12,11 +12,11 @@ if [ "$ENV" = "prod" ]; then
     docker tag webapp:v1 $TARGET_IMAGE
 else
     TARGET_IMAGE="mani0045/dev:v1"    # Replace with actual repo
-    docker tag webapp:v1 $TARGET_IMAGE
+    docker tag webapp:v1 $TARGET_IMAGE 
 fi
 
 # Push the image
-echo "📦 Pushing image to Docker Hub: $TARGET_IMAGE"
+echo "📦 Pushing image to Docker Hub: $TARGET_IMAGE"  
 if docker push "$TARGET_IMAGE"; then
     echo "✅ Image pushed successfully to Docker Hub: $TARGET_IMAGE"
 else
