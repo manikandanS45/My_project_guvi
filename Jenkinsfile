@@ -20,7 +20,7 @@ pipeline {
             }
         }
         stage('Production') {
-            when { branch 'main' } // GitHub branch 
+            when { branch 'main' } // GiitHub branch 
             steps {
                 dir('/home/ubuntu/devops-build/build/') { // Enter directory again
                     sh './deploy.sh prod'
