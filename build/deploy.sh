@@ -1,19 +1,25 @@
 #!/bin/bash
-set -e
 
 ENV=$1
-REPO="mani0045"
 
-echo "Deploying the image"
-
+# Login to Docker
+echo "🔐 Logging into Docker Hub..."
 echo "$DOCKER_CREDS_PSW" | docker login -u "$DOCKER_CREDS_USR" --password-stdin
 
+# Set image tags based on environment
 if [ "$ENV" = "prod" ]; then
-    docker tag webapp:v1 mani0045/prod:v1
-    docker push mani0045/prod:v1
+    TARGET_IMAGE="mani0045/prod:v1"   # Replace with actual repo
+    docker tag webapp:v1 $TARGET_IMAGE
 else
-    docker tag webapp:v1 $REPO:v1
-    docker push $REPO:v1
+    TARGET_IMAGE="mani0045/dev:v1"    # Replace with actual repo
+    docker tag webapp:v1 $TARGET_IMAGE
 fi
 
-echo "✅ Image pushed to Docker Hub: $REPO:v1"
+# Push the image
+echo "📦 Pushing image to Docker Hub: $TARGET_IMAGE"
+if docker push "$TARGET_IMAGE"; then
+    echo "✅ Image pushed successfully to Docker Hub: $TARGET_IMAGE"
+else
+    echo "❌ Failed to push image to Docker Hub: $TARGET_IMAGE"
+    exit 1
+fi
