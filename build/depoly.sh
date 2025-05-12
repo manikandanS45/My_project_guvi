@@ -8,6 +8,6 @@ if [ "$ENV" = "prod" ]; then
     docker push prod:v1 # private repo
 else
     docker tag webapp:v1 dev:v1
-    docker push dev:v1  # public repo
+    docker push dev:v1  # public repo 
 fi
 echo "Image deployed successfully to Dockerhub repo."
