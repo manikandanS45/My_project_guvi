@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build...') {
             steps {
-                dir('/home/ubuntu/devops-build/') { // Enter directory
+                dir('/home/ubuntu/devops-build/build/') { // Enter directory
                     sh './build.sh'
                 }
             }
@@ -14,15 +14,15 @@ pipeline {
         stage('Development') {
             when { branch 'dev' } // GitHub branch 
             steps {
-                dir('/home/ubuntu/devops-build/') { // Enter directory again
+                dir('/home/ubuntu/devops-build/build/') { // Enter directory again
                     sh './deploy.sh dev'
                 }
             }
         }
         stage('Production') {
-            when { branch 'main' } // GiitHub branch 
+            when { branch 'main' } // GitHub branch 
             steps {
-                dir('/home/ubuntu/devops-build/') { // Enter directory again
+                dir('/home/ubuntu/devops-build/build/') { // Enter directory again
                     sh './deploy.sh prod'
                 }
             }
