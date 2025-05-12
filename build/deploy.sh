@@ -4,7 +4,7 @@ ENV=$1
 
 # Login to Docker
 echo "🔐 Logging into Docker Hub..."
-echo "$DOCKER_CREDS_PSW" | docker login -u "$DOCKER_CREDS_USR" --password-stdin
+echo "$DOCKER_CREDS_TOKEN" | docker login -u "$DOCKER_CREDS_USR" --password-stdin
 
 # Set image tags based on environment
 if [ "$ENV" = "prod" ]; then 
