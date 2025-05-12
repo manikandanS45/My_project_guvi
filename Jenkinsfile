@@ -1,40 +1,31 @@
 pipeline {
     agent any
-
-    environment {
-        DOCKER_CREDS = credentials('dockerhub-creds')
-        BUILD_DIR = '/home/ubuntu/devops-build/build'
-    }
-
+        environment {
+        DOCKER_CREDS = credentials('dockerhub-creds') // Auto-injects DOCKER_CREDS_USR and DOCKER_CREDS_PSW
     stages {
         stage('Build...') {
             steps {
-                script {
-                    // Ensure the directory exists and is owned by the correct user
-                    sh "sudo mkdir -p ${BUILD_DIR} && sudo chown -R \$(whoami) ${BUILD_DIR}"
-                }
-                dir("${BUILD_DIR}") {
+                dir('/home/ubuntu/devops-build/build/') { // Enter directory
                     sh './build.sh'
                 }
             }
         }
-
         stage('Development') {
-            when { branch 'dev' }
+            when { branch 'dev' } //git hub branch 
             steps {
-                dir("${BUILD_DIR}") {
+                dir('/home/ubuntu/devops-build/build/') { // Enter directory again
                     sh './deploy.sh dev'
                 }
             }
         }
-
-        stage('Production') {
-            when { branch 'main' }
+        stage('production') {
+            when { branch 'main' } //git hub branch 
             steps {
-                dir("${BUILD_DIR}") {
+                dir('/home/ubuntu/devops-build/build/') { // Enter directory again
                     sh './deploy.sh prod'
                 }
             }
         }
     }
+}
 }
