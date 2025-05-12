@@ -1,36 +1,31 @@
 pipeline {
     agent any
-
     environment {
-        DOCKER_CREDS = credentials('dockerhub-creds') // Provides DOCKER_CREDS_USR and DOCKER_CREDS_PSW
+        DOCKER_CREDS = credentials('dockerhub-creds')
     }
-
     stages {
-        stage('Build') {
+        stage('Build...') {
             steps {
-                dir('scripts') {
+                dir("${env.WORKSPACE}/build") {
+                    sh 'chmod +x build.sh'
                     sh './build.sh'
                 }
             }
         }
-
-        stage('Deploy to Development') {
-            when {
-                branch 'dev'
-            }
+        stage('Development') {
+            when { branch 'dev' }
             steps {
-                dir('scripts') {
+                dir("${env.WORKSPACE}/build") {
+                    sh 'chmod +x deploy.sh'
                     sh './deploy.sh dev'
                 }
             }
         }
-
-        stage('Deploy to Production') {
-            when {
-                branch 'main'
-            }
+        stage('Production') {
+            when { branch 'main' }
             steps {
-                dir('scripts') {
+                dir("${env.WORKSPACE}/build") {
+                    sh 'chmod +x deploy.sh'
                     sh './deploy.sh prod'
                 }
             }
