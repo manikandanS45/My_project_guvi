@@ -3,6 +3,6 @@ version: "3.8"
 services:
   webapp:
     image: webapp:v1
-    container_name: webap70
+    container_name: webap71
     ports:
     - "80:80"
