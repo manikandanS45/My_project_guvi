@@ -7,7 +7,7 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {
+            steps {//
                 dir('scripts') {
                     sh './build.sh'
                 }
