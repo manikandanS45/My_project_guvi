@@ -1,28 +1,28 @@
 pipeline {
     agent any
     environment {
-        DOCKER_CREDS = credentials('dockerhub-creds') // Auto-injects DOCKER_CREDS_USR and DOCKER_CREDS_PSW
+        DOCKER_CREDS = credentials('dockerhub-creds')
     }
     stages {
         stage('Build...') {
             steps {
-                dir('/home/ubuntu/devops-build/build/') { // Enter directory
+                dir("${env.WORKSPACE}/build") {
                     sh './build.sh'
                 }
             }
         }
         stage('Development') {
-            when { branch 'dev' } // GitHub branch 
+            when { branch 'dev' }
             steps {
-                dir('/home/ubuntu/devops-build/build/') { // Enter directory again
+                dir("${env.WORKSPACE}/build") {
                     sh './deploy.sh dev'
                 }
             }
         }
         stage('Production') {
-            when { branch 'main' } // GitHkub branch 
+            when { branch 'main' }
             steps {
-                dir('/home/ubuntu/devops-build/build/') { // Enter directory again
+                dir("${env.WORKSPACE}/build") {
                     sh './deploy.sh prod'
                 }
             }
