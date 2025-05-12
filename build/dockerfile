@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-RUN apt update
+RUN apk update
 
 COPY . /usr/share/nginx/html
 
