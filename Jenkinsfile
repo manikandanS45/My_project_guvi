@@ -2,35 +2,35 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDS = credentials('dockerhub-creds') // Auto-injects DOCKER_CREDS_USR and DOCKER_CREDS_PSW
+        DOCKER_CREDS = credentials('dockerhub-creds') // Provides DOCKER_CREDS_USR and DOCKER_CREDS_PSW
     }
 
     stages {
-        stage('Build...') {
+        stage('Build') {
             steps {
-                dir('/home/ubuntu/devops-build/build/') {
+                dir('scripts') {
                     sh './build.sh'
                 }
             }
         }
 
-        stage('Development') {
+        stage('Deploy to Development') {
             when {
                 branch 'dev'
             }
             steps {
-                dir('/home/ubuntu/devops-build/build/') {
+                dir('scripts') {
                     sh './deploy.sh dev'
                 }
             }
         }
 
-        stage('Production') {
+        stage('Deploy to Production') {
             when {
                 branch 'main'
             }
             steps {
-                dir('/home/ubuntu/devops-build/build/') {
+                dir('scripts') {
                     sh './deploy.sh prod'
                 }
             }
